@@ -4,21 +4,22 @@ public class CommonElements {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        // Input first array
+        
+        System.out.println("Enter the number of inputs in array");
         int m = sc.nextInt();
+        System.out.println("Enter the first array");
         int[] arr1 = new int[m];
         for (int i = 0; i < m; i++) {
             arr1[i] = sc.nextInt();
         }
-
-        // Input second array
+        System.out.println("Enter the number of inputs in array");
         int n = sc.nextInt();
+        System.out.println("Enter the second array");
         int[] arr2 = new int[n];
         for (int i = 0; i < n; i++) {
             arr2[i] = sc.nextInt();
         }
 
-        // Two pointer approach
         int i = 0, j = 0;
         List<Integer> common = new ArrayList<>();
 
@@ -34,7 +35,6 @@ public class CommonElements {
             }
         }
 
-        // Output result
         if (common.isEmpty()) {
             System.out.println("No common elements");
         } else {
