@@ -1,15 +1,10 @@
 import java.util.*;
 
-public class graph1 {
+public class graphDFSTraversal {
 
-    // DFS using Stack (Iterative)
-    public static void dfs(int[][] mat, int start, int v) {
-        boolean[] visited = new boolean[v];
+    public static boolean dfs(int[][] mat, int start, int v, int end, boolean[] visited) {
         Stack<Integer> stack = new Stack<>();
-
         stack.push(start);
-
-        System.out.println("\nDFS Traversal:");
 
         while (!stack.isEmpty()) {
             int node = stack.pop();
@@ -18,7 +13,10 @@ public class graph1 {
                 visited[node] = true;
                 System.out.print(node + " ");
 
-                // Push adjacent vertices in reverse order
+                if (node == end) {
+                    return true;  // End node found
+                }
+
                 for (int i = v - 1; i >= 0; i--) {
                     if (mat[node][i] == 1 && !visited[i]) {
                         stack.push(i);
@@ -26,6 +24,7 @@ public class graph1 {
                 }
             }
         }
+        return false;
     }
 
     public static void main(String[] args) {
@@ -47,7 +46,7 @@ public class graph1 {
 
             if (s >= 0 && s < v && d >= 0 && d < v) {
                 mat[s][d] = 1;
-                mat[d][s] = 1;  // Undirected graph
+                mat[d][s] = 1;   // Undirected
             } else {
                 System.out.println("Invalid edge! Enter again.");
                 i--;
@@ -62,11 +61,40 @@ public class graph1 {
             System.out.println();
         }
 
-        // DFS Call
-        System.out.println("\nEnter starting vertex for DFS:");
+        System.out.println("\nEnter starting vertex:");
         int start = sc.nextInt();
 
-        dfs(mat, start, v);
+        System.out.println("Enter target node:");
+        int end = sc.nextInt();
+
+        // Validation
+        if (start < 0 || start >= v || end < 0 || end >= v) {
+            System.out.println("Invalid start or end vertex!");
+            return;
+        }
+
+        boolean[] visited = new boolean[v];
+
+        System.out.println("\nDFS Traversal:");
+
+        boolean found = dfs(mat, start, v, end, visited);
+
+        // If not found in start's component, check remaining components
+        if (!found) {
+            for (int i = 0; i < v; i++) {
+                if (!visited[i]) {
+                    if (dfs(mat, i, v, end, visited)) {
+                        found = true;
+                        break;
+                    }
+                }
+            }
+        }
+
+        if (found)
+            System.out.println("\nEnd node found!");
+        else
+            System.out.println("\nEnd node not reachable in graph.");
 
         sc.close();
     }
