@@ -66,7 +66,7 @@ public class DivideandConquer {
     public static int partition(int arr[],int si,int ei){
         int pivot = arr[ei];
         int i = si-1; // makes place for elemnts smaller than pivot
-        for(int j =0 ; j<ei;j++){
+        for(int j =si ; j<ei;j++){
             if(arr[j]<=pivot){
                 i++;
                 int temp = arr[j];
@@ -82,6 +82,46 @@ public class DivideandConquer {
 
 
     }
+// search in rotated sorted array
+    public static int search(int arr[] , int tar , int si , int ei){
+        int mid = si + (ei-si)/2;
+        if(arr[mid]==tar){
+            return mid;
+        }
+
+        // mid lies on l1
+        if(arr[si]<=arr[mid]){
+            //case 1 left:
+            if(arr[si]<=tar && tar <=arr[mid]){
+                return search(arr, tar, si, mid-1);
+            }
+            else{
+                //case2 right
+                return search(arr,tar,mid+1,ei);
+            }
+
+
+        }
+
+        //lie om l 2
+        else{
+            //case 3 right of l2
+            if(arr[mid]<=tar && tar<=arr[ei]){
+                return search(arr, tar, mid+1, ei);
+
+            }
+            else{
+                return search(arr, tar, si, mid-1);
+
+            }
+
+        }
+
+
+
+
+
+    }
 
     public static void main(String[] args) {
         int arr[] = {3, 6, 9, 2, 7, 5};
@@ -89,5 +129,12 @@ public class DivideandConquer {
         Printarr(arr);
         quickSort(arr, 0, arr.length-1);
         Printarr(arr);
+
+        int arr1 [] = {4,5,6,7,0,1,2,3};
+        int target = 0;
+        int tindx = search(arr1,target,0,arr1.length-1);
+        System.out.println("The index is " + tindx);
+
+
     }
 }
