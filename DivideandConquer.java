@@ -84,6 +84,10 @@ public class DivideandConquer {
     }
 // search in rotated sorted array
     public static int search(int arr[] , int tar , int si , int ei){
+
+        if(si>ei){
+            return -1;
+        }
         int mid = si + (ei-si)/2;
         if(arr[mid]==tar){
             return mid;
